@@ -97,6 +97,15 @@ select name from (
 ```
 4. Write a query that returns the number of steps that each user has taken all-time.  If the user doesn't have any events, they should be included with 0 steps.
     * Columns: `name`, `step count`
+```sql
+select 
+    cu.name, 
+    nvl(sum(cs.steps), 0) as step_count
+from cte_users cu
+left join cte_steps cs
+    on cu.id = cs.user_id
+group by cu.name
+```
 5. Write a query that returns the number of steps taken in each month in 2020.  Only include months where step events occurred.
     * Columns: `month`, `step count`
 6. Write a query that returns the number of steps taken in each month in 2020 through today.  If a month doesn't have any step events, it should be included with 0 steps.
