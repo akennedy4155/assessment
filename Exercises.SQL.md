@@ -79,6 +79,21 @@ select name from step_event_count
 __Add a new CTE so that we can extract just the required columns from the query.  Given the prompt, we just need name and want to get rid of the count that associated with that.__
 3. Write a query that returns all users that recorded steps on multiple days.
     * Columns: `name`
+```sql
+step_event_count AS (
+    SELECT cu.name, cs.activity_date, COUNT(*)
+    FROM cte_users cu
+    INNER JOIN cte_steps cs
+        ON cu.id = cs.user_id
+    GROUP BY cu.name, cs.activity_date
+)
+select name from (
+    select name, count(*)
+    from step_event_count
+    group by name
+    having count(*) > 1
+)
+```
 4. Write a query that returns the number of steps that each user has taken all-time.  If the user doesn't have any events, they should be included with 0 steps.
     * Columns: `name`, `step count`
 5. Write a query that returns the number of steps taken in each month in 2020.  Only include months where step events occurred.
