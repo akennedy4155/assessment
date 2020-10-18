@@ -207,3 +207,7 @@ join cte_users cu
     on cs.user_id = cu.id
 ```
 11. If the data in the CTEs above were tables with no indexes, which indexes would you recommend (if any) to help satisfy the previous queries?
+
+Would recommend indexing the primary keys of each table, which would be the ID field of each table since we are frequently joining and querying based on that field.  Also, since we are sorting and running a few WHERE clauses on the `activity_date` field it would 
+make sense to index this as well to speed up the joins.  From here, as the tables got more complicated my next steps to optimize would running explain on any problem queries and trying to find long-running clauses that could be sped up without over-indexing the 
+table.
