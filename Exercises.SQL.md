@@ -56,6 +56,13 @@ In your submission back to HealthMine, please include the specific query (exclud
 
 1. Write a query that returns all user step events, sorted by `name` then `activity_date`.  Only include users that have step events.
     * Columns: `name`, `date`, `steps`
+```sql
+SELECT cu.name, cs.activity_date, cs.steps
+FROM cte_users cu
+INNER JOIN cte_steps cs
+    ON cu.id = cs.user_id
+ORDER BY cu.name, cs.activity_date
+```
 2. Write a query that returns all users that have multiple step events.
     * Columns: `name`
 3. Write a query that returns all users that recorded steps on multiple days.
