@@ -66,14 +66,12 @@ ORDER BY cu.name, cs.activity_date
 2. Write a query that returns all users that have multiple step events.
     * Columns: `name`
 ```sql
-select name from (
-    SELECT cu.name, COUNT(*)
-    FROM cte_users cu
-    INNER JOIN cte_steps cs
-        ON cu.id = cs.user_id
-    GROUP BY cu.name
-    HAVING COUNT(*) > 1
-)
+SELECT cu.name
+FROM cte_users cu
+INNER JOIN cte_steps cs
+    ON cu.id = cs.user_id
+GROUP BY cu.name
+HAVING COUNT(*) > 1
 ```
 select name from step_event_count
 ```
