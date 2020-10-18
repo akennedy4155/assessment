@@ -66,7 +66,7 @@ ORDER BY cu.name, cs.activity_date
 2. Write a query that returns all users that have multiple step events.
     * Columns: `name`
 ```sql
-step_event_count AS (
+select name from (
     SELECT cu.name, COUNT(*)
     FROM cte_users cu
     INNER JOIN cte_steps cs
@@ -74,6 +74,7 @@ step_event_count AS (
     GROUP BY cu.name
     HAVING COUNT(*) > 1
 )
+```
 select name from step_event_count
 ```
 __Add a new CTE so that we can extract just the required columns from the query.  Given the prompt, we just need name and want to get rid of the count that associated with that.__
