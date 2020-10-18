@@ -108,6 +108,17 @@ group by cu.name
 ```
 5. Write a query that returns the number of steps taken in each month in 2020.  Only include months where step events occurred.
     * Columns: `month`, `step count`
+```sql
+select 
+    sum(steps), 
+    TO_CHAR(TO_DATE(activity_month, 'MM'), 'MONTH') AS monthname
+from (
+    select extract(month from activity_date) as activity_month, steps
+    from cte_steps
+    where extract(year from activity_date) = '2020'
+) sub
+group by activity_month
+```
 6. Write a query that returns the number of steps taken in each month in 2020 through today.  If a month doesn't have any step events, it should be included with 0 steps.
     * Columns: `month`, `step count`
 7. Write a query that returns the average number of steps taken per user in each month all-time, rounded to 2 decimal places.  Only include months where step events occurred.
