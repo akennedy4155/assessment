@@ -167,10 +167,12 @@ min_day_per_user as (
     from cte_steps
     group by user_id
 )
-select cs.*
+select name, activity_date, steps
 from cte_steps cs
 inner join min_day_per_user min_day
     on cs.activity_date = min_day.min_day and cs.user_id = min_day.user_id
+inner join cte_users cu
+    on cs.user_id = cu.id
 ```
 9. ***With*** using window/analytical functions, write a query that returns the first step event that occurred per user.  If necessary, break ties using the higher step count.
     * Columns: `name`, `date`, `steps`
