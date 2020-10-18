@@ -58,8 +58,8 @@ In your submission back to HealthMine, please include the specific query (exclud
     * Columns: `name`, `date`, `steps`
 ```sql
 SELECT cu.name, cs.activity_date, cs.steps
-FROM cte_users cu
-INNER JOIN cte_steps cs
+FROM cte_steps cs
+INNER JOIN cte_users cu
     ON cu.id = cs.user_id
 ORDER BY cu.name, cs.activity_date
 ```
