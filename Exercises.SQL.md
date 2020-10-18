@@ -176,6 +176,24 @@ inner join cte_users cu
 ```
 9. ***With*** using window/analytical functions, write a query that returns the first step event that occurred per user.  If necessary, break ties using the higher step count.
     * Columns: `name`, `date`, `steps`
+```sql
+date_order as (
+    select
+        cs.*,
+        row_number() over(
+            partition by user_id
+            order by 
+                activity_date,
+                steps desc
+            ) as min_date
+    from cte_steps cs
+)
+select name, activity_date, steps
+from date_order date_order
+join cte_users ce
+    on date_order.user_id = ce.id
+where min_date = 1
+```
 10. Using window/analytical functions, write a query that returns all step events, and the number of steps taken in the previous event by the user.  If necessary, break ties using `cte_steps.id`.
     * Columns: `name`, `date`, `steps`, `previous steps`
 11. If the data in the CTEs above were tables with no indexes, which indexes would you recommend (if any) to help satisfy the previous queries?
