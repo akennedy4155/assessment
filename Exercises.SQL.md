@@ -147,6 +147,16 @@ right join all_months am
 ```
 7. Write a query that returns the average number of steps taken per user in each month all-time, rounded to 2 decimal places.  Only include months where step events occurred.
     * Columns: `month`, `name`, `average steps`
+```sql
+select
+    round(avg(steps), 2) as steps_in_month,
+    name,
+    TO_CHAR(TO_DATE(extract(month from activity_date), 'MM'), 'MONTH') as activity_month
+from cte_steps cs
+inner join cte_users cu
+    on cu.id = cs.user_id
+group by name, extract(month from activity_date)
+```
 8. ***Without*** using window/analytical functions, write a query that returns all step events that occurred on a user's first day of activity.
     * Columns: `name`, `date`, `steps`
 9. ***With*** using window/analytical functions, write a query that returns the first step event that occurred per user.  If necessary, break ties using the higher step count.
