@@ -159,6 +159,19 @@ group by name, extract(month from activity_date)
 ```
 8. ***Without*** using window/analytical functions, write a query that returns all step events that occurred on a user's first day of activity.
     * Columns: `name`, `date`, `steps`
+```sql
+min_day_per_user as (
+    select
+        min(activity_date) as min_day,
+        user_id
+    from cte_steps
+    group by user_id
+)
+select cs.*
+from cte_steps cs
+inner join min_day_per_user min_day
+    on cs.activity_date = min_day.min_day and cs.user_id = min_day.user_id
+```
 9. ***With*** using window/analytical functions, write a query that returns the first step event that occurred per user.  If necessary, break ties using the higher step count.
     * Columns: `name`, `date`, `steps`
 10. Using window/analytical functions, write a query that returns all step events, and the number of steps taken in the previous event by the user.  If necessary, break ties using `cte_steps.id`.
