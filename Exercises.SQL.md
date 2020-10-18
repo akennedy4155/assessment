@@ -348,7 +348,7 @@ previous queries?
 
 Would recommend indexing the primary keys of each table, which would be the ID field of each table since we are frequently 
 joining and querying based on that field.  Also, since we are sorting and running a few WHERE clauses on the `activity_date` 
-field it would make sense to index this as well to speed up the joins.  From here, as the tables got more complicated my next 
-steps to optimize would running explain on any problem queries and trying to find long-running clauses that could be sped up 
+field it would make sense to index this as well to speed up the joins and the 'where' filters.  From here, as the tables got 
+more complicated my next steps to optimize would running explain on any problem queries and trying to find long-running clauses that could be sped up 
 without over-indexing the table.
 
