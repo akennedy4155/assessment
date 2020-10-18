@@ -121,6 +121,30 @@ group by activity_month
 ```
 6. Write a query that returns the number of steps taken in each month in 2020 through today.  If a month doesn't have any step events, it should be included with 0 steps.
     * Columns: `month`, `step count`
+```sql
+all_months as (
+    select to_char(date '2000-12-01' + numtoyminterval(level,'month'),'MONTH') as month
+    from dual
+    connect by level <= 12
+),
+step_count_to_month as (
+    select 
+        sum(steps) as step_count, 
+        activity_month
+    from (
+        select extract(month from activity_date) as activity_month, steps
+        from cte_steps
+        where extract(year from activity_date) = '2020' and activity_date < current_date
+    ) sub
+    group by activity_month
+)
+select 
+    month, 
+    nvl(step_count, 0)
+from step_count_to_month sctm
+right join all_months am
+    on TO_CHAR(TO_DATE(sctm.activity_month, 'MM'), 'MONTH') = am.month
+```
 7. Write a query that returns the average number of steps taken per user in each month all-time, rounded to 2 decimal places.  Only include months where step events occurred.
     * Columns: `month`, `name`, `average steps`
 8. ***Without*** using window/analytical functions, write a query that returns all step events that occurred on a user's first day of activity.
