@@ -1,4 +1,4 @@
-# Congratulations!
+# Congratulations, Alex Kennedy!
 
 Congratulations for making it to this part of the interview process. To get a hands-on idea of your current skillset, we'd like for you to perform some SQL and Python exercises and trust that this part of the process will be as enjoyable as it would be for us.
 
